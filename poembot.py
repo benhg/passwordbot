@@ -110,26 +110,21 @@ def print_poem():
     file in the poems directory, formats the author and title, and prints it.
     """
     PRINTER.wake()
-    day = time.strftime("%m/%d/%Y").split("/")[1]
-    poem_path = "poems/" + day + ".txt"
-    try:
-        with open(poem_path) as poem_file:
-            poem_lines = poem_file.read().splitlines()
-    except IOError as error:
-        PRINTER.println(error)
-        PRINTER.feed(3)
-    title = textwrap.fill(poem_lines.pop(0), width=32)
-    author = textwrap.fill(poem_lines.pop(0), width=32)
-    poem = ""
-    for line in poem_lines:
-        poem += textwrap.fill(line, width=42, subsequent_indent="  ") + "\n"
-    PRINTER.println("Today's poem: " + time.strftime("%m/%d/%Y"))
+
+    PRINTER.println("Password For: __________________")
     PRINTER.feed(1)
     
-    PRINTER.println(title)
+    from xkcdpass import xkcd_password as xp
+
+
+    wordfile = xp.locate_wordfile()
+    mywords = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=8)
+
+    passwd = xp.generate_xkcdpassword(mywords, numwords=4, delimiter="-")
     
-    PRINTER.println(author)
+    PRINTER.println(passwd)
     PRINTER.writeBytes(0x1B, 0x21, 0x1)
+
     PRINTER.println(poem)
     PRINTER.feed(3)
     PRINTER.sleep()
@@ -153,11 +148,7 @@ def main():
     while True:
         if BUTTON.is_pressed():
             LED.set_color(YELLOW)
-            winchance = random.random()
-            if winchance > 0:
-                print_secret_msg()
-            else:
-                print_poem()
+            print_poem()
             LED.set_color(GREEN)
 
 
