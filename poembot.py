@@ -124,8 +124,6 @@ def print_poem():
     
     PRINTER.println(passwd)
     PRINTER.writeBytes(0x1B, 0x21, 0x1)
-
-    PRINTER.println(poem)
     PRINTER.feed(3)
     PRINTER.sleep()
 
