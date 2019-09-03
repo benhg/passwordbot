@@ -122,9 +122,10 @@ def print_poem():
 
     passwd = xp.generate_xkcdpassword(mywords, numwords=4, delimiter="-")
     
-    PRINTER.println(passwd)
-    PRINTER.writeBytes(0x1B, 0x21, 0x1)
     PRINTER.feed(3)
+    PRINTER.println(passwd)
+    PRINTER.feed(6)
+    
     PRINTER.sleep()
 
 
