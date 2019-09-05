@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /home/pi/poembot || exit
+cd /home/pi/passwordbot || exit
 python poembot.py
